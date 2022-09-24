@@ -1,0 +1,11 @@
+{
+  "name": "exercises-in-programming-style",
+  "version": "0.0.0",
+  "type": "module",
+  "repository": "https://github.com/GreatWizard/exercises-in-programming-style.git",
+  "author": "Guillaume Gérard",
+  "license": "MIT",
+  "scripts": {
+    "test": "./index.sh"
+  }
+}
