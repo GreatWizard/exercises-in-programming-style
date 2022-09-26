@@ -12,7 +12,9 @@ let data = undefined;
 let words = undefined;
 const wordFreqs = [];
 
-// The procedures
+/*
+ * The procedures
+ */
 function readFile(pathToFile) {
   // Takes a path to a file and assigns the entire contents of the file to the global variable data
   data = fs.readFileSync(pathToFile, "UTF-8");
@@ -60,7 +62,9 @@ function sort() {
   );
 }
 
-// The main function
+/*
+ * The main function
+ */
 readFile(args[0]);
 filterCharsAndNormalize();
 scan();

@@ -7,7 +7,9 @@ if (!args[0]) {
   throw new Error("A text file is required as first argument.");
 }
 
-// The functions
+/*
+ * The functions
+ */
 function readFile(pathToFile) {
   // Takes a path to a file and assigns the entire contents of the file to the global variable data
   return fs.readFileSync(pathToFile, "UTF-8");
@@ -38,16 +40,15 @@ function removeStopWords(words) {
 
 function frequencies(words) {
   // Creates a list of pairs associating words with frequencies
-  const wordFreqs = [];
-  words.forEach((word) => {
+  return words.reduce((wordFreqs, word) => {
     const found = wordFreqs.find((pair) => pair.word === word);
     if (found) {
       found.freq++;
     } else {
       wordFreqs.push({ word, freq: 1 });
     }
-  });
-  return wordFreqs;
+    return wordFreqs;
+  }, []);
 }
 
 function sort(wordFreqs) {
@@ -62,7 +63,9 @@ function printAll(wordFreqs) {
   wordFreqs.forEach((pair) => console.log(`${pair.word} - ${pair.freq}`));
 }
 
-// The main function
+/*
+ * The main function
+ */
 printAll(
   sort(
     frequencies(
