@@ -33,7 +33,12 @@ let i = 0;
       // Ignore stop words
       if (!stopWords.includes(word)) {
         // Let's see if it already exists
-        let foundAt = wordFreqs.findIndex((pair) => pair.word === word);
+        let foundAt = -1;
+        for (let i = 0; i < wordFreqs.length; i++) {
+          if (wordFreqs[i].word === word) {
+            foundAt = i;
+          }
+        }
         if (foundAt !== -1) {
           wordFreqs[foundAt].freq++;
         } else {
