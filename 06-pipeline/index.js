@@ -7,42 +7,38 @@ if (!args[0]) {
   throw new Error("A text file is required as first argument.");
 }
 
-// The shared mutable data
-let data = undefined;
-let words = undefined;
-const wordFreqs = [];
-
-// The procedures
+// The functions
 function readFile(pathToFile) {
   // Takes a path to a file and assigns the entire contents of the file to the global variable data
-  data = fs.readFileSync(pathToFile, "UTF-8");
+  return fs.readFileSync(pathToFile, "UTF-8");
 }
 
-function filterCharsAndNormalize() {
+function filterCharsAndNormalize(data) {
   // Replaces all nonalphanumeric chars in data with white space
-  data = [...data]
+  return [...data]
     .map((c) => (isAlNum(c) ? c : " "))
     .join("")
     .trim()
     .toLowerCase();
 }
 
-function scan() {
+function scan(data) {
   // Scans data for words, filling the global variable words
-  words = data.split(/\s+/);
+  return data.split(/\s+/);
 }
 
-function removeStopWords() {
+function removeStopWords(words) {
   const stopWords = fs
     .readFileSync("stop_words.txt", "UTF-8")
     .toString()
     .toLowerCase()
     .split(",");
-  words = words.filter((word) => !stopWords.includes(word));
+  return words.filter((word) => !stopWords.includes(word));
 }
 
-function frequencies() {
+function frequencies(words) {
   // Creates a list of pairs associating words with frequencies
+  const wordFreqs = [];
   words.forEach((word) => {
     const found = wordFreqs.find((pair) => pair.word === word);
     if (found) {
@@ -51,23 +47,26 @@ function frequencies() {
       wordFreqs.push({ word, freq: 1 });
     }
   });
+  return wordFreqs;
 }
 
-function sort() {
+function sort(wordFreqs) {
   // Sorts word_freqs by frequency
-  wordFreqs.sort((a, b) =>
+  return wordFreqs.sort((a, b) =>
     b.freq - a.freq !== 0 ? b.freq - a.freq : b.word < a.word ? 1 : -1
   );
 }
 
-// The main function
-readFile(args[0]);
-filterCharsAndNormalize();
-scan();
-removeStopWords();
-frequencies();
-sort();
+function printAll(wordFreqs) {
+  // Takes a list of pairs where the entries are sorted by frequency and print them recursively
+  wordFreqs.forEach((pair) => console.log(`${pair.word} - ${pair.freq}`));
+}
 
-wordFreqs
-  .slice(0, 25)
-  .forEach((pair) => console.log(`${pair.word} - ${pair.freq}`));
+// The main function
+printAll(
+  sort(
+    frequencies(
+      removeStopWords(scan(filterCharsAndNormalize(readFile(args[0]))))
+    )
+  ).slice(0, 25)
+);
