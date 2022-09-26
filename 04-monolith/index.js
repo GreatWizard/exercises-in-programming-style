@@ -25,7 +25,7 @@ let i = 0;
   } else {
     if (!isAlNum(c)) {
       // We found the end of a word. Process it
-      let word = text.substring(startChar, i).toLowerCase();
+      const word = text.substring(startChar, i).toLowerCase();
       // Ignore stop words
       if (!stopWords.includes(word)) {
         // Let's see if it already exists
