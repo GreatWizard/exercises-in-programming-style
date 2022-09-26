@@ -1,13 +1,3 @@
-import fs from "fs";
-
-export function loadStopWords() {
-  return fs
-    .readFileSync("stop_words.txt", "UTF-8")
-    .toString()
-    .toLowerCase()
-    .split(",");
-}
-
 export function isAlpha(c) {
   return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z");
 }

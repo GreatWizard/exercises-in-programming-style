@@ -1,5 +1,5 @@
 import fs from "fs";
-import { loadStopWords, isAlNum } from "../utils/index.js";
+import { isAlNum } from "../utils/index.js";
 
 const args = process.argv.slice(2);
 
@@ -33,7 +33,11 @@ function scan() {
 }
 
 function removeStopWords() {
-  const stopWords = loadStopWords();
+  const stopWords = fs
+    .readFileSync("stop_words.txt", "UTF-8")
+    .toString()
+    .toLowerCase()
+    .split(",");
   words = words.filter((word) => !stopWords.includes(word));
 }
 
